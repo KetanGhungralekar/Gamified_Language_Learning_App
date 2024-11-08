@@ -1,7 +1,8 @@
-import { Home, Person, Group, School, Logout } from "@mui/icons-material"; // Adjusted icons
+import { Home, Person, Group, School } from "@mui/icons-material"; // Adjusted icons
 import { Drawer, Typography, useMediaQuery, Box } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+
+// Use a retro pixel font for typography
+const pixelFont = "'Press Start 2P', cursive"; // Popular retro font for pixel-art look
 
 const menu = [
     { title: "Home", icon: <Home />, path: "/home" },
@@ -10,19 +11,8 @@ const menu = [
     { title: "Lessons", icon: <School />, path: "/lessons" },
 ];
 
-export const AdminSidebar = ({ handleClose }) => {
+export const Sidebar = ({ handleClose }) => {
     const isSmallScreen = useMediaQuery("(max-width:1080px)");
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-
-    const handleNavigate = (item) => {
-        if (item.title === "Logout") {
-            dispatch(logout()); // Assuming logout action is imported
-            navigate("/"); // Redirect to home
-        } else {
-            navigate(`/admin${item.path}`); // Navigate to the respective path
-        }
-    };
 
     return (
         <Drawer
@@ -39,6 +29,7 @@ export const AdminSidebar = ({ handleClose }) => {
                     boxShadow: "3px 0 5px rgba(0, 0, 0, 0.2)",
                     borderRight: "none",
                     overflow: "hidden",
+                    fontFamily: pixelFont, // Applying pixel font
                 },
             }}
         >
@@ -55,7 +46,6 @@ export const AdminSidebar = ({ handleClose }) => {
                     {menu.slice(0, menu.length - 1).map((item, i) => (
                         <Box key={i} sx={{ mb: 2 }}>
                             <Box
-                                onClick={() => handleNavigate(item)}
                                 sx={{
                                     display: "flex",
                                     alignItems: "center",
@@ -64,11 +54,11 @@ export const AdminSidebar = ({ handleClose }) => {
                                     cursor: "pointer",
                                     borderRadius: 2,
                                     transition: "transform 0.3s, background-color 0.3s",
-                                    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+                                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)", // More blocky shadow for a pixel look
                                     "&:hover": {
                                         backgroundColor: "#374151",
-                                        transform: "translateY(-4px)",
-                                        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
+                                        transform: "translateY(-2px)", // Slight hover movement
+                                        boxShadow: "0 6px 10px rgba(0, 0, 0, 0.4)", // Blockier hover effect
                                     },
                                 }}
                             >
@@ -82,6 +72,7 @@ export const AdminSidebar = ({ handleClose }) => {
                                         borderRadius: "50%",
                                         backgroundColor: "#4B5563",
                                         mr: 2,
+                                        border: "2px solid #D1D5DB", // Adding border to icons to make them more pixel-like
                                     }}
                                 >
                                     {item.icon}
@@ -97,7 +88,6 @@ export const AdminSidebar = ({ handleClose }) => {
                 <Box sx={{ mb: 2 }}>
                     {/* Logout Option */}
                     <Box
-                        onClick={() => handleNavigate(menu[menu.length - 1])}
                         sx={{
                             display: "flex",
                             alignItems: "center",
@@ -106,11 +96,11 @@ export const AdminSidebar = ({ handleClose }) => {
                             cursor: "pointer",
                             borderRadius: 2,
                             transition: "transform 0.3s, background-color 0.3s",
-                            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+                            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
                             "&:hover": {
                                 backgroundColor: "#374151",
-                                transform: "translateY(-4px)",
-                                boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
+                                transform: "translateY(-2px)",
+                                boxShadow: "0 6px 10px rgba(0, 0, 0, 0.4)",
                             },
                         }}
                     >
@@ -126,7 +116,6 @@ export const AdminSidebar = ({ handleClose }) => {
                                 mr: 2,
                             }}
                         >
-                            <Logout />
                         </Box>
                         <Typography variant="body1" sx={{ fontWeight: 500 }}>
                             Logout
